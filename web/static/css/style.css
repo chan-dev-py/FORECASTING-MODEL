@@ -1,0 +1,634 @@
+/* ==========================================
+   GLOBAL STYLES
+========================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f6f8;
+    color: #1f2937;
+    min-height: 100vh;
+}
+
+
+/* ==========================================
+   SIDEBAR
+========================================== */
+
+.sidebar {
+    width: 260px;
+    min-height: 100vh;
+    background: #123524;
+    color: #ffffff;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 30px 20px;
+    z-index: 100;
+}
+
+.logo {
+    padding-bottom: 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    margin-bottom: 25px;
+}
+
+.logo h2 {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.logo p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #d1d5db;
+}
+
+
+/* ==========================================
+   NAVIGATION
+========================================== */
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sidebar nav a {
+    color: #d1d5db;
+    text-decoration: none;
+    padding: 14px 15px;
+    border-radius: 8px;
+    transition: 0.2s ease;
+    font-size: 15px;
+}
+
+.sidebar nav a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+.sidebar nav a.active {
+    background: #ffffff;
+    color: #123524;
+    font-weight: bold;
+}
+
+
+/* ==========================================
+   MAIN CONTENT
+========================================== */
+
+.main-content {
+    margin-left: 260px;
+    width: calc(100% - 260px);
+    min-height: 100vh;
+    padding: 35px 45px;
+}
+
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+}
+
+.header h1 {
+    font-size: 30px;
+    color: #1f2937;
+    margin-bottom: 8px;
+}
+
+.header p {
+    color: #6b7280;
+    font-size: 15px;
+}
+
+.header-info {
+    background: #ffffff;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #4b5563;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+
+/* ==========================================
+   WELCOME CARD
+========================================== */
+
+.welcome-card {
+    background: linear-gradient(135deg, #123524, #1e5b3a);
+    color: #ffffff;
+    padding: 32px;
+    border-radius: 14px;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 18px rgba(18, 53, 36, 0.15);
+}
+
+.welcome-card h2 {
+    margin-bottom: 12px;
+    font-size: 24px;
+}
+
+.welcome-card p {
+    color: #e5e7eb;
+    line-height: 1.7;
+    max-width: 750px;
+    font-size: 15px;
+}
+
+
+/* ==========================================
+   STATISTICS
+========================================== */
+
+.statistics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: #ffffff;
+    padding: 22px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.stat-icon {
+    font-size: 28px;
+    background: #e8f0eb;
+    width: 58px;
+    height: 58px;
+    min-width: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+}
+
+.stat-card p {
+    color: #6b7280;
+    font-size: 13px;
+    margin-bottom: 6px;
+    line-height: 1.4;
+}
+
+.stat-card h2 {
+    font-size: 22px;
+    color: #123524;
+}
+
+
+/* ==========================================
+   CONTENT GRID
+========================================== */
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-bottom: 35px;
+}
+
+.info-card {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.info-card h2 {
+    font-size: 19px;
+    margin-bottom: 20px;
+    color: #1f2937;
+}
+
+
+/* ==========================================
+   BEST MODEL
+========================================== */
+
+.model-highlight {
+    background: #e8f0eb;
+    padding: 25px;
+    border-radius: 10px;
+    border-left: 5px solid #123524;
+}
+
+.model-highlight h1 {
+    color: #123524;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.model-highlight p {
+    color: #4b5563;
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+
+/* ==========================================
+   PERFORMANCE
+========================================== */
+
+.performance-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.performance-list div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.performance-list div:last-child {
+    border-bottom: none;
+}
+
+.performance-list span {
+    color: #6b7280;
+    font-size: 15px;
+}
+
+.performance-list strong {
+    color: #123524;
+    font-size: 17px;
+}
+
+
+/* ==========================================
+   SYSTEM FEATURES
+========================================== */
+
+.features {
+    margin-bottom: 40px;
+}
+
+.features h2 {
+    margin-bottom: 20px;
+    color: #1f2937;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.feature-card {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.feature-card h3 {
+    margin-bottom: 12px;
+    color: #123524;
+    font-size: 17px;
+}
+
+.feature-card p {
+    color: #6b7280;
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+
+/* ==========================================
+   RESPONSIVE DESIGN
+========================================== */
+
+@media screen and (max-width: 1100px) {
+
+    .statistics {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media screen and (max-width: 768px) {
+
+    .sidebar {
+        width: 210px;
+    }
+
+    .main-content {
+        margin-left: 210px;
+        width: calc(100% - 210px);
+        padding: 25px 20px;
+    }
+
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+}
+
+
+@media screen and (max-width: 600px) {
+
+    .sidebar {
+        position: relative;
+        width: 100%;
+        min-height: auto;
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 20px;
+    }
+
+    .statistics {
+        grid-template-columns: 1fr;
+    }
+
+    .header h1 {
+        font-size: 24px;
+    }
+
+}
+
+/* ==========================================
+   FORECAST TABLE
+========================================== */
+
+.forecast-section {
+    margin-bottom: 40px;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+table thead {
+    background: #123524;
+    color: white;
+}
+
+table th {
+    padding: 15px;
+    text-align: left;
+    font-size: 14px;
+}
+
+table td {
+    padding: 15px;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 14px;
+}
+
+table tbody tr {
+    transition: 0.2s ease;
+}
+
+table tbody tr:hover {
+    background: #f3f7f4;
+}
+
+table td strong {
+    color: #123524;
+    font-size: 15px;
+}
+
+/* ==========================================
+   SIMULATION PAGE
+========================================== */
+
+.simulation-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    max-width: 600px;
+
+    margin-top: 20px;
+}
+
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+
+.form-group label {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+
+.form-group select,
+.form-group input {
+    width: 100%;
+
+    padding: 14px 16px;
+
+    border:
+        1px solid #d1d5db;
+
+    border-radius: 8px;
+
+    font-size: 15px;
+
+    outline: none;
+}
+
+
+.form-group select:focus,
+.form-group input:focus {
+    border-color: #123524;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(18, 53, 36, 0.1);
+}
+
+
+.form-group small {
+    color: #6b7280;
+
+    line-height: 1.5;
+}
+
+
+#simulateButton {
+    width: fit-content;
+
+    background: #123524;
+
+    color: white;
+
+    border: none;
+
+    padding: 14px 25px;
+
+    border-radius: 8px;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+#simulateButton:hover {
+    background: #0c2418;
+
+    transform: translateY(-1px);
+}
+
+
+/* SIMULATION RESULTS */
+
+.simulation-result {
+    margin-top: 30px;
+}
+
+
+.simulation-summary {
+    background: #e8f0eb;
+
+    padding: 20px;
+
+    border-radius: 10px;
+
+    margin-bottom: 25px;
+}
+
+
+.simulation-summary h3 {
+    color: #123524;
+
+    margin-bottom: 8px;
+}
+
+
+.simulation-summary p {
+    color: #4b5563;
+}
+
+/* ==========================================
+   MODEL PERFORMANCE PAGE
+========================================== */
+
+.performance-table {
+    margin-top: 20px;
+}
+
+
+.performance-table th,
+.performance-table td {
+    text-align: center;
+}
+
+
+.performance-table th:nth-child(2),
+.performance-table td:nth-child(2) {
+    text-align: left;
+}
+
+
+.performance-table tbody tr:first-child {
+    background: #e8f0eb;
+}
+
+
+.best-model-card {
+    border-left: 5px solid #123524;
+}
+
+
+.metrics-section {
+    margin-top: 10px;
+    margin-bottom: 40px;
+}
+
+
+.metrics-section h2 {
+    margin-bottom: 20px;
+}
+/* ==========================================
+   FORECAST VALIDATION PAGE
+========================================== */
+
+.validation-table {
+    margin-top: 20px;
+}
+
+.validation-table th {
+    white-space: nowrap;
+}
+
+.validation-table td {
+    white-space: nowrap;
+}
+
+.no-data {
+    color: #6b7280;
+    padding: 20px 0;
+}

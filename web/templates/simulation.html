@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Enrollment Simulation
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <h2>📊 EFSS</h2>
+
+            <p>
+                Enrollment Forecasting
+                <br>
+                & Simulation System
+            </p>
+
+        </div>
+
+
+        <nav>
+
+            <a href="{{ url_for('index') }}">
+
+                🏠 Dashboard
+
+            </a>
+
+
+            <a href="{{ url_for('forecast') }}">
+
+                🔮 Forecast
+
+            </a>
+
+
+            <a
+                href="{{ url_for('simulation') }}"
+                class="active"
+            >
+
+                🧪 Simulation
+
+            </a>
+
+
+            <a href="{{ url_for('model_performance') }}">
+
+                📈 Model Performance
+
+            </a>
+
+
+            <a href="{{ url_for('validation') }}">
+
+                ✅ Forecast Validation
+
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="main-content">
+
+
+        <!-- HEADER -->
+
+        <div class="header">
+
+            <div>
+
+                <h1>
+                    Enrollment Simulation
+                </h1>
+
+                <p>
+                    Simulate possible changes in
+                    future enrollment forecasts.
+                </p>
+
+            </div>
+
+
+            <div class="header-info">
+
+                <span>
+                    Simulation Tool
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================
+             SIMULATION CONTROLS
+        ========================== -->
+
+        <section class="info-card">
+
+            <h2>
+                🧪 Configure Simulation
+            </h2>
+
+
+            <div class="simulation-controls">
+
+
+                <!-- PROGRAM -->
+
+                <div class="form-group">
+
+                    <label>
+                        Academic Program
+                    </label>
+
+
+                    <select id="program">
+
+                        <option value="">
+                            Select a program
+                        </option>
+
+
+                        {% for program in programs %}
+
+                        <option
+                            value="{{ program }}"
+                        >
+
+                            {{ program }}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- ADJUSTMENT -->
+
+                <div class="form-group">
+
+                    <label>
+                        Enrollment Adjustment (%)
+                    </label>
+
+
+                    <input
+                        type="number"
+
+                        id="adjustment"
+
+                        value="0"
+
+                        min="-100"
+
+                        max="100"
+
+                        step="1"
+                    >
+
+                    <small>
+                        Use a positive value to simulate
+                        an increase and a negative value
+                        to simulate a decrease.
+                    </small>
+
+                </div>
+
+
+                <!-- BUTTON -->
+
+                <button
+                    id="simulateButton"
+                >
+
+                    Run Simulation
+
+                </button>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             SIMULATION RESULT
+        ========================== -->
+
+        <section
+            class="info-card simulation-result"
+            id="simulationResult"
+            style="display: none;"
+        >
+
+
+            <h2>
+                📊 Simulation Results
+            </h2>
+
+
+            <div
+                id="simulationSummary"
+                class="simulation-summary"
+            >
+            </div>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Academic Year
+                            </th>
+
+                            <th>
+                                Semester
+                            </th>
+
+                            <th>
+                                Original Forecast
+                            </th>
+
+                            <th>
+                                Simulated Enrollment
+                            </th>
+
+                            <th>
+                                Difference
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody
+                        id="simulationTable"
+                    >
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        const simulateButton =
+            document.getElementById(
+                "simulateButton"
+            );
+
+
+        simulateButton.addEventListener(
+            "click",
+            async function () {
+
+
+                const program =
+                    document.getElementById(
+                        "program"
+                    ).value;
+
+
+                const adjustment =
+                    document.getElementById(
+                        "adjustment"
+                    ).value;
+
+
+                if (!program) {
+
+                    alert(
+                        "Please select an academic program."
+                    );
+
+                    return;
+
+                }
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            "/api/simulate",
+                            {
+
+                                method: "POST",
+
+                                headers: {
+
+                                    "Content-Type":
+                                        "application/json"
+
+                                },
+
+                                body: JSON.stringify({
+
+                                    program: program,
+
+                                    adjustment:
+                                        adjustment
+
+                                })
+
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    if (!response.ok) {
+
+                        alert(
+                            data.error ||
+                            "Simulation failed."
+                        );
+
+                        return;
+
+                    }
+
+
+                    displaySimulation(
+                        data
+                    );
+
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        error
+                    );
+
+
+                    alert(
+                        "An error occurred while running the simulation."
+                    );
+
+                }
+
+
+            }
+        );
+
+
+
+        function displaySimulation(data) {
+
+
+            const resultSection =
+                document.getElementById(
+                    "simulationResult"
+                );
+
+
+            const summary =
+                document.getElementById(
+                    "simulationSummary"
+                );
+
+
+            const table =
+                document.getElementById(
+                    "simulationTable"
+                );
+
+
+            // Show result section
+
+            resultSection.style.display =
+                "block";
+
+
+            // Simulation summary
+
+            let adjustmentText;
+
+
+            if (
+                data.adjustment > 0
+            ) {
+
+                adjustmentText =
+                    "+" +
+                    data.adjustment +
+                    "% increase";
+
+            }
+
+            else if (
+                data.adjustment < 0
+            ) {
+
+                adjustmentText =
+                    data.adjustment +
+                    "% decrease";
+
+            }
+
+            else {
+
+                adjustmentText =
+                    "No adjustment";
+
+            }
+
+
+            summary.innerHTML = `
+
+                <h3>
+                    ${data.program}
+                </h3>
+
+                <p>
+                    Simulation Scenario:
+                    <strong>
+                        ${adjustmentText}
+                    </strong>
+                </p>
+
+            `;
+
+
+            // Clear previous results
+
+            table.innerHTML = "";
+
+
+            // Add simulation rows
+
+            data.results.forEach(
+                function (row) {
+
+
+                    const difference =
+                        row.SIMULATED_ENROLLMENT -
+                        row.PREDICTED_ENROLLMENT;
+
+
+                    let differenceText;
+
+
+                    if (
+                        difference > 0
+                    ) {
+
+                        differenceText =
+                            "+" +
+                            difference.toLocaleString();
+
+                    }
+
+                    else {
+
+                        differenceText =
+                            difference.toLocaleString();
+
+                    }
+
+
+                    const tableRow =
+                        document.createElement(
+                            "tr"
+                        );
+
+
+                    tableRow.innerHTML = `
+
+                        <td>
+                            ${row.ACADEMIC_YEAR}
+                        </td>
+
+                        <td>
+                            ${row.SEMESTER}
+                        </td>
+
+                        <td>
+                            ${Math.round(
+                                row.PREDICTED_ENROLLMENT
+                            ).toLocaleString()}
+                        </td>
+
+                        <td>
+                            ${Math.round(
+                                row.SIMULATED_ENROLLMENT
+                            ).toLocaleString()}
+                        </td>
+
+                        <td>
+                            ${differenceText}
+                        </td>
+
+                    `;
+
+
+                    table.appendChild(
+                        tableRow
+                    );
+
+
+                }
+            );
+
+
+            // Scroll to result
+
+            resultSection.scrollIntoView({
+
+                behavior: "smooth",
+
+                block: "start"
+
+            });
+
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

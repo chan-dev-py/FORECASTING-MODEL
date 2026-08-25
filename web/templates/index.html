@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Enrollment Forecasting and Simulation System</title>
+
+    <!-- CSS -->
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+</head>
+
+
+<body>
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                📊
+            </div>
+
+            <div>
+                <h2>EFSS</h2>
+
+                <p>
+                    Enrollment Forecasting
+                    <br>
+                    & Simulation System
+                </p>
+            </div>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="navigation">
+
+            <a
+                href="{{ url_for('index') }}"
+                class="nav-link active"
+            >
+                <span class="nav-icon">🏠</span>
+                <span>Dashboard</span>
+            </a>
+
+
+            <a
+                href="{{ url_for('forecast') }}"
+                class="nav-link"
+            >
+                <span class="nav-icon">🔮</span>
+                <span>Forecast</span>
+            </a>
+
+
+            <a
+                href="{{ url_for('simulation') }}"
+                class="nav-link"
+            >
+                <span class="nav-icon">🧪</span>
+                <span>Simulation</span>
+            </a>
+
+
+            <a
+                href="{{ url_for('model_performance') }}"
+                class="nav-link"
+            >
+                <span class="nav-icon">📈</span>
+                <span>Model Performance</span>
+            </a>
+
+
+            <a
+                href="{{ url_for('validation') }}"
+                class="nav-link"
+            >
+                <span class="nav-icon">✅</span>
+                <span>Forecast Validation</span>
+            </a>
+
+        </nav>
+
+
+        <!-- SIDEBAR FOOTER -->
+
+        <div class="sidebar-footer">
+
+            <p>
+                Tangub City Global College
+            </p>
+
+            <small>
+                Enrollment Forecasting System
+            </small>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="main-content">
+
+
+        <!-- =========================
+             HEADER
+        ========================== -->
+
+        <header class="header">
+
+            <div class="header-title">
+
+                <p class="page-label">
+                    DASHBOARD OVERVIEW
+                </p>
+
+                <h1>
+                    Enrollment Forecasting Dashboard
+                </h1>
+
+                <p class="header-subtitle">
+                    Tangub City Global College
+                </p>
+
+            </div>
+
+
+            <div class="header-info">
+
+                <div class="system-status">
+
+                    <span class="status-dot"></span>
+
+                    <span>
+                        System Active
+                    </span>
+
+                </div>
+
+                <small>
+                    Web-Based Forecasting System
+                </small>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =========================
+             WELCOME SECTION
+        ========================== -->
+
+        <section class="welcome-card">
+
+            <div class="welcome-content">
+
+                <p class="section-label">
+                    ENROLLMENT FORECASTING
+                </p>
+
+                <h2>
+                    Welcome to the Enrollment Forecasting
+                    and Simulation System
+                </h2>
+
+                <p>
+                    This system analyzes historical college enrollment
+                    data and provides future enrollment forecasts to
+                    support academic planning, decision-making, and
+                    resource allocation.
+                </p>
+
+            </div>
+
+
+            <div class="welcome-icon">
+                📊
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             STATISTICS
+        ========================== -->
+
+        <section class="statistics">
+
+
+            <!-- TOTAL ENROLLMENT -->
+
+            <article class="stat-card">
+
+                <div class="stat-icon">
+                    👨‍🎓
+                </div>
+
+                <div class="stat-info">
+
+                    <p>
+                        Total Historical Enrollment
+                    </p>
+
+                    <h2>
+                        {{ "{:,}".format(total_enrollment) }}
+                    </h2>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- TOTAL PROGRAMS -->
+
+            <article class="stat-card">
+
+                <div class="stat-icon">
+                    🎓
+                </div>
+
+                <div class="stat-info">
+
+                    <p>
+                        Academic Programs
+                    </p>
+
+                    <h2>
+                        {{ total_programs }}
+                    </h2>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- BEST MODEL -->
+
+            <article class="stat-card">
+
+                <div class="stat-icon">
+                    🏆
+                </div>
+
+                <div class="stat-info">
+
+                    <p>
+                        Best Performing Model
+                    </p>
+
+                    <h2>
+                        {{ best_model }}
+                    </h2>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- RMSE -->
+
+            <article class="stat-card">
+
+                <div class="stat-icon">
+                    📉
+                </div>
+
+                <div class="stat-info">
+
+                    <p>
+                        Best Model RMSE
+                    </p>
+
+                    <h2>
+                        {{ "%.2f"|format(rmse) }}
+                    </h2>
+
+                </div>
+
+            </article>
+
+
+        </section>
+
+
+
+        <!-- =========================
+             MODEL SUMMARY
+        ========================== -->
+
+        <section class="section-header">
+
+            <div>
+
+                <p class="section-label">
+                    MODEL EVALUATION
+                </p>
+
+                <h2>
+                    Forecasting Model Summary
+                </h2>
+
+            </div>
+
+        </section>
+
+
+        <section class="content-grid">
+
+
+            <!-- BEST MODEL -->
+
+            <article class="info-card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <p class="section-label">
+                            BEST MODEL
+                        </p>
+
+                        <h2>
+                            🏆 Best Performing Model
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="model-highlight">
+
+                    <div class="model-badge">
+
+                        Selected Model
+
+                    </div>
+
+
+                    <h1>
+                        {{ best_model }}
+                    </h1>
+
+
+                    <p>
+                        Based on the comparative evaluation of
+                        the forecasting models using RMSE,
+                        MAE, and MAPE.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- MODEL PERFORMANCE -->
+
+            <article class="info-card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <p class="section-label">
+                            PERFORMANCE METRICS
+                        </p>
+
+                        <h2>
+                            📊 Model Performance
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="performance-list">
+
+
+                    <div class="metric-row">
+
+                        <span class="metric-name">
+                            RMSE
+                        </span>
+
+                        <strong>
+                            {{ "%.2f"|format(rmse) }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="metric-row">
+
+                        <span class="metric-name">
+                            MAE
+                        </span>
+
+                        <strong>
+                            {{ "%.2f"|format(mae) }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="metric-row">
+
+                        <span class="metric-name">
+                            MAPE
+                        </span>
+
+                        <strong>
+                            {{ "%.2f"|format(mape) }}%
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+            </article>
+
+
+        </section>
+
+
+
+        <!-- =========================
+             SYSTEM FEATURES
+        ========================== -->
+
+        <section class="features">
+
+
+            <div class="section-header">
+
+                <div>
+
+                    <p class="section-label">
+                        SYSTEM MODULES
+                    </p>
+
+                    <h2>
+                        System Features
+                    </h2>
+
+                    <p class="section-description">
+
+                        Explore the different tools available
+                        in the Enrollment Forecasting and
+                        Simulation System.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="feature-grid">
+
+
+                <!-- HISTORICAL ANALYSIS -->
+
+                <a
+                    href="{{ url_for('index') }}"
+                    class="feature-card"
+                >
+
+                    <div class="feature-icon">
+                        📈
+                    </div>
+
+
+                    <h3>
+                        Historical Analysis
+                    </h3>
+
+
+                    <p>
+                        Analyze historical enrollment trends
+                        across academic programs and semesters.
+                    </p>
+
+
+                    <span class="feature-link">
+                        View Dashboard →
+                    </span>
+
+                </a>
+
+
+
+                <!-- FORECASTING -->
+
+                <a
+                    href="{{ url_for('forecast') }}"
+                    class="feature-card"
+                >
+
+                    <div class="feature-icon">
+                        🔮
+                    </div>
+
+
+                    <h3>
+                        Enrollment Forecasting
+                    </h3>
+
+
+                    <p>
+                        View forecasted college enrollment
+                        using the selected forecasting model.
+                    </p>
+
+
+                    <span class="feature-link">
+                        View Forecast →
+                    </span>
+
+                </a>
+
+
+
+                <!-- SIMULATION -->
+
+                <a
+                    href="{{ url_for('simulation') }}"
+                    class="feature-card"
+                >
+
+                    <div class="feature-icon">
+                        🧪
+                    </div>
+
+
+                    <h3>
+                        Enrollment Simulation
+                    </h3>
+
+
+                    <p>
+                        Simulate possible enrollment increases
+                        or decreases to support academic planning.
+                    </p>
+
+
+                    <span class="feature-link">
+                        Run Simulation →
+                    </span>
+
+                </a>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =========================
+             FOOTER
+        ========================== -->
+
+        <footer class="dashboard-footer">
+
+            <p>
+                Enrollment Forecasting and Simulation System
+            </p>
+
+            <small>
+                Tangub City Global College
+            </small>
+
+        </footer>
+
+
+    </main>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script
+        src="{{ url_for('static', filename='js/script.js') }}"
+    ></script>
+
+
+</body>
+
+</html>

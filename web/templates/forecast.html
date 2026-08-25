@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Enrollment Forecast</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <h2>📊 EFSS</h2>
+
+            <p>
+                Enrollment Forecasting
+                <br>
+                & Simulation System
+            </p>
+
+        </div>
+
+
+        <nav>
+
+            <a href="{{ url_for('index') }}">
+
+                🏠 Dashboard
+
+            </a>
+
+
+            <a href="{{ url_for('forecast') }}"
+                class="active">
+
+                🔮 Forecast
+
+            </a>
+
+
+            <a href="{{ url_for('simulation') }}">
+
+                🧪 Simulation
+
+            </a>
+
+
+            <a href="{{ url_for('model_performance') }}">
+
+                📈 Model Performance
+
+            </a>
+
+
+            <a href="{{ url_for('validation') }}">
+
+                ✅ Forecast Validation
+
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="main-content">
+
+
+        <!-- HEADER -->
+
+        <div class="header">
+
+            <div>
+
+                <h1>
+                    Enrollment Forecast
+                </h1>
+
+                <p>
+                    Projected enrollment for Academic Year 2026
+                </p>
+
+            </div>
+
+
+            <div class="header-info">
+
+                <span>
+                    🔮 ARIMA Forecast Model
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================
+             FORECAST INTRO
+        ========================== -->
+
+        <section class="welcome-card">
+
+            <h2>
+                Future Enrollment Projections
+            </h2>
+
+            <p>
+                The following projections are generated using the
+                best-performing forecasting model based on the
+                comparative evaluation of the selected models.
+                These forecasts may assist the institution in
+                academic planning and resource allocation.
+            </p>
+
+        </section>
+
+
+
+        <!-- =========================
+             FORECAST SUMMARY
+        ========================== -->
+
+        <section class="statistics">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🎓
+                </div>
+
+                <div>
+
+                    <p>
+                        Total Programs
+                    </p>
+
+                    <h2>
+                        {{ total_programs }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    📅
+                </div>
+
+                <div>
+
+                    <p>
+                        Forecast Periods
+                    </p>
+
+                    <h2>
+                        {{ total_forecasts }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    📈
+                </div>
+
+                <div>
+
+                    <p>
+                        Forecast Model
+                    </p>
+
+                    <h2>
+                        ARIMA
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🏫
+                </div>
+
+                <div>
+
+                    <p>
+                        Academic Year
+                    </p>
+
+                    <h2>
+                        2026
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             FORECAST TABLE
+        ========================== -->
+
+        <section class="forecast-section">
+
+            <div class="info-card">
+
+                <h2>
+                    📊 Enrollment Forecast Results
+                </h2>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Program
+                                </th>
+
+                                <th>
+                                    Academic Year
+                                </th>
+
+                                <th>
+                                    Semester
+                                </th>
+
+                                <th>
+                                    Predicted Enrollment
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for row in forecasts %}
+
+                            <tr>
+
+                                <td>
+                                    {{ row.PROGRAM }}
+                                </td>
+
+                                <td>
+                                    {{ row.ACADEMIC_YEAR }}
+                                </td>
+
+                                <td>
+                                    Semester {{ row.SEMESTER }}
+                                </td>
+
+                                <td>
+
+                                    <strong>
+
+                                        {{ "{:,.0f}".format(
+                                            row.PREDICTED_ENROLLMENT
+                                        ) }}
+
+                                    </strong>
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+</body>
+
+</html>

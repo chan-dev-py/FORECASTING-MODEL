@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Model Performance
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <h2>📊 EFSS</h2>
+
+            <p>
+                Enrollment Forecasting
+                <br>
+                & Simulation System
+            </p>
+
+        </div>
+
+
+        <nav>
+
+            <a href="{{ url_for('index') }}">
+
+                🏠 Dashboard
+
+            </a>
+
+
+            <a href="{{ url_for('forecast') }}">
+
+                🔮 Forecast
+
+            </a>
+
+
+            <a href="{{ url_for('simulation') }}">
+
+                🧪 Simulation
+
+            </a>
+
+
+            <a
+                href="{{ url_for('model_performance') }}"
+                class="active"
+            >
+
+                📈 Model Performance
+
+            </a>
+
+
+            <a href="{{ url_for('validation') }}">
+
+                ✅ Forecast Validation
+
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="main-content">
+
+
+        <!-- HEADER -->
+
+        <div class="header">
+
+            <div>
+
+                <h1>
+                    Model Performance
+                </h1>
+
+                <p>
+                    Comparative evaluation of the
+                    forecasting models used in the study.
+                </p>
+
+            </div>
+
+
+            <div class="header-info">
+
+                <span>
+                    Model Evaluation
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================
+             INTRODUCTION CARD
+        ========================== -->
+
+        <section class="welcome-card">
+
+            <h2>
+                📊 Forecasting Model Comparison
+            </h2>
+
+            <p>
+                The forecasting models are evaluated
+                using Root Mean Squared Error (RMSE),
+                Mean Absolute Error (MAE), and
+                Mean Absolute Percentage Error (MAPE).
+                Lower error values generally indicate
+                better forecasting performance.
+            </p>
+
+        </section>
+
+
+
+        <!-- =========================
+             MODEL COMPARISON TABLE
+        ========================== -->
+
+        <section class="info-card">
+
+            <h2>
+                📈 Model Performance Results
+            </h2>
+
+
+            <div class="table-container">
+
+                <table class="performance-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Rank
+                            </th>
+
+                            <th>
+                                Forecasting Model
+                            </th>
+
+                            <th>
+                                RMSE
+                            </th>
+
+                            <th>
+                                MAE
+                            </th>
+
+                            <th>
+                                MAPE (%)
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for model in models %}
+
+                        <tr>
+
+                            <!-- RANK -->
+
+                            <td>
+
+                                {% if loop.index == 1 %}
+
+                                    🥇 1
+
+                                {% elif loop.index == 2 %}
+
+                                    🥈 2
+
+                                {% elif loop.index == 3 %}
+
+                                    🥉 3
+
+                                {% else %}
+
+                                    {{ loop.index }}
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- MODEL -->
+
+                            <td>
+
+                                <strong>
+
+                                    {{ model["MODEL"] }}
+
+                                </strong>
+
+                            </td>
+
+
+                            <!-- RMSE -->
+
+                            <td>
+
+                                {{ "%.2f"|format(
+                                    model["RMSE"]
+                                ) }}
+
+                            </td>
+
+
+                            <!-- MAE -->
+
+                            <td>
+
+                                {{ "%.2f"|format(
+                                    model["MAE"]
+                                ) }}
+
+                            </td>
+
+
+                            <!-- MAPE -->
+
+                            <td>
+
+                                {{ "%.2f"|format(
+                                    model["MAPE"]
+                                ) }}%
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             BEST MODEL
+        ========================== -->
+
+        {% if models %}
+
+        <section class="content-grid">
+
+            <div class="info-card best-model-card">
+
+                <h2>
+                    🏆 Best Performing Model
+                </h2>
+
+
+                <div class="model-highlight">
+
+                    <h1>
+
+                        {{ models[0]["MODEL"] }}
+
+                    </h1>
+
+
+                    <p>
+                        This model achieved the best
+                        overall performance based on the
+                        comparative evaluation results.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PERFORMANCE METRICS -->
+
+            <div class="info-card">
+
+                <h2>
+                    📊 Best Model Metrics
+                </h2>
+
+
+                <div class="performance-list">
+
+                    <div>
+
+                        <span>
+                            RMSE
+                        </span>
+
+
+                        <strong>
+
+                            {{ "%.2f"|format(
+                                models[0]["RMSE"]
+                            ) }}
+
+                        </strong>
+
+                    </div>
+
+
+
+                    <div>
+
+                        <span>
+                            MAE
+                        </span>
+
+
+                        <strong>
+
+                            {{ "%.2f"|format(
+                                models[0]["MAE"]
+                            ) }}
+
+                        </strong>
+
+                    </div>
+
+
+
+                    <div>
+
+                        <span>
+                            MAPE
+                        </span>
+
+
+                        <strong>
+
+                            {{ "%.2f"|format(
+                                models[0]["MAPE"]
+                            ) }}%
+
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        {% endif %}
+
+
+
+        <!-- =========================
+             METRICS EXPLANATION
+        ========================== -->
+
+        <section class="metrics-section">
+
+            <h2>
+                Understanding the Evaluation Metrics
+            </h2>
+
+
+            <div class="feature-grid">
+
+
+                <div class="feature-card">
+
+                    <h3>
+                        📉 RMSE
+                    </h3>
+
+                    <p>
+                        Root Mean Squared Error measures
+                        the average magnitude of prediction
+                        errors while giving greater weight
+                        to larger errors.
+                    </p>
+
+                </div>
+
+
+
+                <div class="feature-card">
+
+                    <h3>
+                        📊 MAE
+                    </h3>
+
+                    <p>
+                        Mean Absolute Error measures the
+                        average absolute difference between
+                        the actual enrollment values and
+                        the predicted values.
+                    </p>
+
+                </div>
+
+
+
+                <div class="feature-card">
+
+                    <h3>
+                        📈 MAPE
+                    </h3>
+
+                    <p>
+                        Mean Absolute Percentage Error
+                        measures the average prediction
+                        error as a percentage of the
+                        actual enrollment values.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+</body>
+
+</html>
